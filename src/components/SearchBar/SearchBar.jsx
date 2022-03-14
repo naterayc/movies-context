@@ -1,22 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from '../../styled-components/StyledInput';
-import styled from 'styled-components';
+import { Container } from '../../styled-components/Container';
 import { Link } from 'react-router-dom';
-
-const Container = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`;
+import useHandleChange from '../../Custom Hooks/UseHandleChange';
 
 const SearchBar = () => {
 
-    const [query, setQuery] = useState('');
+    const { query, handleChange } = useHandleChange();
 
-    const handleChange = (e) => {
-        setQuery(e.target.value);
-    }
     return (
         <Container>
             <Input type="text" placeholder="Search movies" value={query} onChange={handleChange} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
@@ -15,9 +15,11 @@ import MovieDetails from './components/MovieDetails';
 import SimilarMoviesContextProvider from './contexts/SimilarMoviesContext';
 import SimilarMovies from './components/SimilarMovies';
 import SearchBar from './components/SearchBar/SearchBar';
-import SearchMoviesContextProvider from './contexts/SearchMoviesContext';
-import SearchResults from './components/SearchResults';
-
+import Loader from './components/common/Loader';
+// import SearchMoviesContextProvider from './contexts/SearchMoviesContext';
+// import SearchResults from './components/SearchResults';
+const SearchMoviesContextProvider = lazy(() => import('./contexts/SearchMoviesContext'))
+const SearchResults = lazy(() => import('./components/SearchResults')) 
 
 function App() {
   return (
@@ -51,11 +53,13 @@ function App() {
             <SimilarMovies />
           </SimilarMoviesContextProvider>
         </Route>
-        <Route path="/search/:query">
-          <SearchMoviesContextProvider>
-            <SearchResults />
-          </SearchMoviesContextProvider>
-        </Route>
+        <Suspense fallback={<Loader />}>
+          <Route path="/search/:query">
+            <SearchMoviesContextProvider>
+              <SearchResults />
+            </SearchMoviesContextProvider>
+          </Route>
+        </Suspense>
         <Route component={NotFound} />
       </Switch>
       <Footer />
