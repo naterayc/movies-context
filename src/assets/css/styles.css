@@ -137,6 +137,7 @@ footer{
     display: flex;
     justify-content: space-between;
     max-width: 90em;
+    margin: auto;
 }
 
 .link-btn{
@@ -160,7 +161,7 @@ footer{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    margin-bottom: 3em;
+    margin: auto auto 3em;
     max-width: 90em;
 }
 
