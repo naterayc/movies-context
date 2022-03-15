@@ -16,54 +16,57 @@ import SimilarMoviesContextProvider from './contexts/SimilarMoviesContext';
 import SimilarMovies from './components/SimilarMovies';
 import SearchBar from './components/SearchBar/SearchBar';
 import Loader from './components/common/Loader';
+import { ErrorBoundary } from './ErrorBoundary/ErrorBoundary';
 // import SearchMoviesContextProvider from './contexts/SearchMoviesContext';
 // import SearchResults from './components/SearchResults';
 const SearchMoviesContextProvider = lazy(() => import('./contexts/SearchMoviesContext'))
-const SearchResults = lazy(() => import('./components/SearchResults')) 
+const SearchResults = lazy(() => import('./components/SearchResults'))
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Switch>
-        <Route exact path="/">
-          <SearchBar />
-          <NowPlayingMoviesContextProvider>
-            <NowPlayingTrimmed />
-          </NowPlayingMoviesContextProvider>
-          <PopularMoviesContextProvider>
-            <PopularTrimmed />
-          </PopularMoviesContextProvider>
-        </Route>
-        <Route exact path="/now-in-theatres">
-          <NowPlayingMoviesContextProvider>
-            <NowPlaying />
-          </NowPlayingMoviesContextProvider>
-        </Route>
-        <Route exact path="/popular-movies">
-          <PopularMoviesContextProvider>
-            <Popular />
-          </PopularMoviesContextProvider>
-        </Route>
-        <Route path="/movie/:movie_id">
-          <MovieDetailsContextProvider>
-            <MovieDetails />
-          </MovieDetailsContextProvider>
-          <SimilarMoviesContextProvider>
-            <SimilarMovies />
-          </SimilarMoviesContextProvider>
-        </Route>
-        <Suspense fallback={<Loader />}>
-          <Route path="/search/:query">
-            <SearchMoviesContextProvider>
-              <SearchResults />
-            </SearchMoviesContextProvider>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <SearchBar />
+            <NowPlayingMoviesContextProvider>
+              <NowPlayingTrimmed />
+            </NowPlayingMoviesContextProvider>
+            <PopularMoviesContextProvider>
+              <PopularTrimmed />
+            </PopularMoviesContextProvider>
           </Route>
-        </Suspense>
-        <Route component={NotFound} />
-      </Switch>
-      <Footer />
-    </BrowserRouter>
+          <Route exact path="/now-in-theatres">
+            <NowPlayingMoviesContextProvider>
+              <NowPlaying />
+            </NowPlayingMoviesContextProvider>
+          </Route>
+          <Route exact path="/popular-movies">
+            <PopularMoviesContextProvider>
+              <Popular />
+            </PopularMoviesContextProvider>
+          </Route>
+          <Route path="/movie/:movie_id">
+            <MovieDetailsContextProvider>
+              <MovieDetails />
+            </MovieDetailsContextProvider>
+            <SimilarMoviesContextProvider>
+              <SimilarMovies />
+            </SimilarMoviesContextProvider>
+          </Route>
+          <Suspense fallback={<Loader />}>
+            <Route path="/search/:query">
+              <SearchMoviesContextProvider>
+                <SearchResults />
+              </SearchMoviesContextProvider>
+            </Route>
+          </Suspense>
+          <Route component={NotFound} />
+        </Switch>
+        <Footer />
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 
