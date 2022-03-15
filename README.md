@@ -6,6 +6,6 @@ Se utilizó el patrón de diseño por contextos o parcelas, React Router Dom par
 
 Para poder desplegar el proyecto, luego de clonarlo se deben ejecutar los siguientes comandos:
 
-#####`$npm install`
+##### `$npm install`
 
-#####`$npm start`
+##### `$npm start`
